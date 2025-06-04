@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2025 기관별 찬양제 포스터</title>
+
+  <!-- 카카오톡 og 메타 태그 -->
+  <meta property="og:title" content="새생명교회 기관별 찬양대회">
+  <meta property="og:description" content="2025년 6월 29일, 새생명교회 본당에서 열리는 최고의 찬양 무대!">
+  <meta property="og:image" content="https://yourdomain.github.io/images/slide1.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.github.io/">
+
   <style>
     body {
       margin: 0;
@@ -25,19 +33,32 @@
       margin-bottom: 40px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       border-radius: 8px;
+      display: none;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 10px;
-      }
+    .poster.active {
+      display: block;
     }
   </style>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const img1 = document.getElementById('img1');
+      const img2 = document.getElementById('img2');
+
+      img1.classList.add('active');
+
+      setTimeout(() => {
+        img1.classList.remove('active');
+        img2.classList.add('active');
+      }, 10000); // 10초 후 전환
+    });
+  </script>
 </head>
 <body>
   <div class="container">
-    <img src="images/slide1.jpg" alt="기관별 찬양제 포스터 시안1" class="poster">
-    <img src="images/slide2.jpg" alt="기관별 찬양제 포스터 시안2" class="poster">
+    <img id="img1" src="images/slide1.jpg" alt="찬양제 포스터 1" class="poster">
+    <img id="img2" src="images/slide2.jpg" alt="찬양제 포스터 2" class="poster">
   </div>
 </body>
 </html>
