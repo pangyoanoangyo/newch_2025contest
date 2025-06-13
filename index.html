@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2025 기관별 찬양제 포스터</title>
+
+  <!-- 카카오톡 og 메타 태그 -->
+  <meta property="og:title" content="새생명교회 기관별 찬양대회">
+  <meta property="og:description" content="2025년 6월 29일, 새생명교회 본당에서 열리는 최고의 찬양 무대!">
+  <meta property="og:image" content="https://yourdomain.github.io/images/slide1.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourdomain.github.io/">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .poster {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+
+    .poster.active {
+      opacity: 1;
+    }
+
+    /* 세로 화면 (모바일 등) */
+    @media (orientation: portrait) {
+      .poster {
+        width: 95vw;
+        height: auto;
+        max-height: 95vh;
+        object-fit: contain;
+      }
+    }
+
+    /* 가로 화면 (PC, 태블릿 가로 등) */
+    @media (orientation: landscape) {
+      .poster {
+        height: 90vh;
+        width: auto;
+        max-width: 90vw;
+        object-fit: contain;
+      }
+    }
+
+    /* 로딩 인디케이터 */
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 18px;
+      opacity: 0.7;
+    }
+
+    /* 작은 인디케이터 점들 */
+    .indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transition: background 0.3s ease;
+    }
+
+    .indicator.active {
+      background: rgba(255,255,255,0.9);
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow-container">
+    <div class="loading" id="loading">포스터 로딩 중...</div>
+    
+    <img id="img1" src="images/slide1.jpg" alt="찬양제 포스터 1" class="poster">
+    <img id="img2" src="images/slide2.jpg" alt="찬양제 포스터 2" class="poster">
+    
+    <div class="indicators">
+      <div class="indicator active" data-slide="0"></div>
+      <div class="indicator" data-slide="1"></div>
+    </div>
+  </div>
+
+
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 30px;">
+  <div style="flex: 1 1 400px; max-width: 560px;">
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/3Bvk0Zzavdg?si=9tZvfPZiQJoIWfya" 
+      title="YouTube video 1" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div style="flex: 1 1 400px; max-width: 560px;">
+    <iframe width="100%" height="315" src="https://www.youtube.com/embed/4t7xz4yvB9E?si=xo5cEj0cFyygh0GU" 
+      title="YouTube video 2" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.poster');
+    const indicators = document.querySelectorAll('.indicator');
+    const loading = document.getElementById('loading');
+    let imagesLoaded = 0;
+
+    // 이미지 로딩 체크
+    function checkImagesLoaded() {
+      imagesLoaded++;
+      if (imagesLoaded === slides.length) {
+        loading.style.display = 'none';
+        startSlideshow();
+      }
+    }
+
+    // 이미지 로딩 이벤트 리스너
+    slides.forEach(img => {
+      if (img.complete) {
+        checkImagesLoaded();
+      } else {
+        img.addEventListener('load', checkImagesLoaded);
+        img.addEventListener('error', checkImagesLoaded);
+      }
+    });
+
+    function showSlide(index) {
+      // 모든 슬라이드 숨기기
+      slides.forEach(slide => slide.classList.remove('active'));
+      indicators.forEach(indicator => indicator.classList.remove('active'));
+      
+      // 현재 슬라이드 보이기
+      slides[index].classList.add('active');
+      indicators[index].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function startSlideshow() {
+      // 첫 번째 슬라이드 표시
+      showSlide(0);
+      
+      // 10초마다 슬라이드 변경
+      setInterval(nextSlide, 10000);
+    }
+
+    // 인디케이터 클릭 이벤트
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+
+    // 키보드 이벤트 (선택사항)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        currentSlide = currentSlide > 0 ? currentSlide - 1 : slides.length - 1;
+        showSlide(currentSlide);
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    });
+  </script>
+</body>
+</html>
